@@ -1,0 +1,10 @@
+version: '3'
+services:
+  notepad:
+    container_name: "notepad"
+    restart: always
+    ports:
+      - "9099:9099"
+    volumes:
+      - "./_tmp:/app/_tmp"
+    image: fghwett/notepad
