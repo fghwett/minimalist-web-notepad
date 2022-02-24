@@ -3,7 +3,7 @@ ARG GOPROXY=direct
 WORKDIR /go/src/fghwett/notepad
 COPY . .
 RUN go get -d -v ./...
-RUN CGO_ENABLED=0 go build -ldflags="-w -s -extldflags -static" ./main.go
+RUN go build -o notepad ./main.go
 
 FROM scratch
 MAINTAINER fghwett fghwett@qq.com
