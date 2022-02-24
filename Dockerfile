@@ -3,7 +3,7 @@ WORKDIR /go/src/fghwett/notepad
 COPY . .
 RUN go get -d -v ./...
 RUN go env -w GO111MODULE=on
-RUN go build -o notepad ./
+RUN CGO_ENABLED=0 go build -o notepad ./
 
 FROM scratch
 MAINTAINER fghwett fghwett@qq.com
