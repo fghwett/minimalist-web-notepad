@@ -1,8 +1,8 @@
 FROM golang:1.7 as builder
-ARG GO111MODULE=on
 WORKDIR /go/src/fghwett/notepad
 COPY . .
 RUN go get -d -v ./...
+RUN go env -w GO111MODULE=on
 RUN go build -o notepad ./
 
 FROM scratch
