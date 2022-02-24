@@ -1,4 +1,4 @@
-FROM golang:1.15 as builder
+FROM golang:1.7 as builder
 ARG GOPROXY=direct
 WORKDIR /go/src/fghwett/notepad
 COPY . .
