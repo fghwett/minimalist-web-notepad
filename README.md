@@ -36,7 +36,7 @@ wget -O https://raw.githubusercontent.com/fghwett/minimalist-web-notepad/main/do
 docker-compose up -d
 ```
 
-> 目前docker镜像只支持X64平台
+> 目前docker镜像支持linux/amd64 linux/arm linux/arm64，其他平台需要自行编译测试
 
 ## API
 
