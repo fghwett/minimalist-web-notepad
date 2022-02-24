@@ -1,4 +1,4 @@
-FROM golang:1.7 as builder
+FROM golang:alpine as builder
 WORKDIR /go/src/fghwett/notepad
 COPY . .
 RUN go get -d -v ./...
