@@ -1,9 +1,9 @@
 FROM golang:1.7 as builder
-ARG GOPROXY=direct
+ARG GO111MODULE=on
 WORKDIR /go/src/fghwett/notepad
 COPY . .
 RUN go get -d -v ./...
-RUN go build -o notepad ./main.go
+RUN go build -o notepad ./
 
 FROM scratch
 MAINTAINER fghwett fghwett@qq.com
