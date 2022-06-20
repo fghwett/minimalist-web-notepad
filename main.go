@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"html/template"
+	"io/fs"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -127,7 +128,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tem, err := template.ParseFiles("static/index.html")
+	tem, err := template.ParseFS(static, "static/index.html")
 	if err != nil {
 		log.Printf("read index error: %s \n", err)
 		return
@@ -160,9 +161,10 @@ func randStr() string {
 }
 
 func main() {
-	fs := http.FileServer(http.FS(static))
+	web, _ := fs.Sub(static, "static")
+	f := http.FileServer(http.FS(web))
 
-	http.Handle("/static/", fs)
+	http.Handle("/static/", http.StripPrefix("/static/", f))
 	http.HandleFunc("/", index)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
