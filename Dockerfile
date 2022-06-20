@@ -8,7 +8,6 @@ RUN CGO_ENABLED=0 go build -o notepad ./
 FROM scratch
 MAINTAINER fghwett fghwett@qq.com
 WORKDIR /app
-COPY --from=builder /go/src/fghwett/notepad/static /app/static
 COPY --from=builder /go/src/fghwett/notepad/notepad /app/notepad
 VOLUME /app/_tmp
 EXPOSE 9099

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -18,6 +19,9 @@ const (
 	port     = 9099
 	savePath = "_tmp"
 )
+
+//go:embed static/*
+var static embed.FS
 
 func index(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
@@ -147,8 +151,8 @@ func jump(w http.ResponseWriter, r *http.Request) {
 func randStr() string {
 	words := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 	str := ""
+	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < 6; i++ {
-		rand.Seed(time.Now().UnixNano())
 		index := rand.Intn(len(words))
 		str += string(words[index])
 	}
@@ -156,9 +160,9 @@ func randStr() string {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("static/"))
+	fs := http.FileServer(http.FS(static))
 
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.Handle("/static/", fs)
 	http.HandleFunc("/", index)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
